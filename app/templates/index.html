@@ -17,41 +17,48 @@
     {% endfor %}
     </ul>
     <div class="row">
-        <div class="col s12 m4" style="min-width: 40%">
-          <div class="card white">
-            <div class="card-content white-text">
-                <span class="card-title black-text"><b>TI-84 Calculator</b></span>
-                <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>Instructional Center</p>
-                <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>2:50</p>
-              </div>
-        
+        {% for lend in litems %}
+            {{ lend }}
+        {% endfor %}
+        {% for borrow in bitems %}
+            <div class="col s12 m4" style="min-width: 40%">
+              <div class="card white">
+                <div class="card-content white-text">
+                    <span class="card-title black-text"><b>{{ borrow.item_name }}</b></span>
+                    <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ borrow.item_location }}</p>
+                    <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ borrow.item_time_pickup }}</p>
+                  </div>
+            
 
-        <!-- 
-        <div class="col s7">
-            <div class="card">
-                <div class="card-content">
-                    Lend Items:<br>
-                    {% for lend in litems %}
-                        {{ lend }}
-                    {% endfor %}
-                    <br>
-                    Borrow Items:<br>
-                    {% for borrow in bitems %}
-                        {{ borrow.item_name }}<br>
-                        {{ borrow.item_location }}
-                        {{ borrow.item_time_pickup }}
-                    {% endfor %}
-                    <br>
-                    <a href="{{ url_for('lend_item') }}">Lend Item</a>
-                    <a href="{{ url_for('borrow_item') }}">Borrow Item</a>
-                </div> -->
-            <div class="card-action valign-wrapper">
-                <img class="center-align profilePicSmall valign" id="ppSmall" src="http://ghostlypixels.com/wp-content/themes/illustrate-ghostly/images/profile-pic.png">
-                <p class="black-text personName valign">Steve D.</p>
-                <a href="#" class="rounded waves-effect waves-light btn pink valign">LEND</a>
+            <!-- 
+            <div class="col s7">
+                <div class="card">
+                    <div class="card-content">
+                        Lend Items:<br>
+                        {% for lend in litems %}
+                            {{ lend }}
+                        {% endfor %}
+                        potato
+                        <br>
+                        Borrow Items:<br>
+                        {% for borrow in bitems %}
+                            {{ borrow.item_name }}<br>
+                            {{ borrow.item_location }}
+                            {{ borrow.item_time_pickup }}
+                        {% endfor %}
+                        <br>
+                        <a href="{{ url_for('lend_item') }}">Lend Item</a>
+                        <a href="{{ url_for('borrow_item') }}">Borrow Item</a>
+                    </div> -->
+                <div class="card-action valign-wrapper">
+                    <img class="center-align profilePicSmall valign" id="ppSmall" src="http://ghostlypixels.com/wp-content/themes/illustrate-ghostly/images/profile-pic.png">
+                    <p class="black-text personName valign">Steve D.</p>
+                    <a href="#" class="rounded waves-effect waves-light btn pink valign">LEND</a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+        {% endfor %}
+
       </div>
     <h5 class="headspace">New Items</h5>
     
@@ -60,8 +67,8 @@
       <i class="large material-icons">mode_edit</i>
     </a>
     <ul>
-      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating red" href="{{ url_for('borrow_item') }}"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="{{ url_for('borrow_item') }}><i class="material-icons">format_quote</i></a></li>
     </ul>
   </div>
 
