@@ -38,6 +38,7 @@ main {
     margin-bottom: 30px;
     width: 70%;
     border-radius: 100px;
+    border: solid #dedede 5px;
 }
 
 .profilePicSmall{
