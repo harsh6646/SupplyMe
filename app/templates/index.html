@@ -8,7 +8,9 @@
     <h7 class="locspace">{{ g.user.location }}</h7>
     <br>
     <h6 id="itemsOffer">Items on offer:</h6>
-    <h7>{{ g.user.items_offered }}</h7>
+    <h7>{{ g.user.items_offered }}</h7><br>
+    <h6 id="itemsOffer">Karma:</h6>
+    <h7>{{ g.user.karma }}</h7>
     <br>
     <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink profileBtn">View Profile</a>
 </div>
@@ -76,6 +78,10 @@
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
                     <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
                     <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('pending', id=pending.id) }}">Confirm</a>
+
+                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('upvote', id=pending.id) }}">Upvote</a>
+
+                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('downvote', id=pending.id) }}">Downvote</a>
                 </div>
               </div>
             </div>
