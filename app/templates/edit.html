@@ -6,7 +6,7 @@
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title indigo-text">Edit your profile</span>
+                    <span class="card-title pink-text">Edit your profile</span>
                     <div class="row">
     <form class="col s12" action="" method="POST" name="edit">
         {{ form.hidden_tag() }}
@@ -39,6 +39,7 @@
                 {{ form.location(size=24) }}
             </div>
         </div>
-        <button class="btn waves-effect waves-light indigo" type="submit" name="submit" value="Save Changes">Edit</button>
+        <button class="btn waves-effect waves-light pink" type="submit" name="submit" value="Save Changes">Save</button>
+         <a class="waves-effect waves-pink btn-flat" href="{{ url_for('user', nickname=g.user.nickname) }}">Back</button>
     </form>
 {% endblock %}

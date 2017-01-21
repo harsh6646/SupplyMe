@@ -81,6 +81,10 @@ main {
     margin-right: 15px;
 }
 
+.personCard{
+    margin: 24px 24px 24px 0.5vw;
+}
+
 .titheight{
     margin-bottom: 20px;
 }
