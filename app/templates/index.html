@@ -4,10 +4,12 @@
 <div class="sidebar">
     <h5 class="center-align">{{ g.user.nickname }}</h5>
     <img class="center-align profilePic" src="{{ g.user.profile_picture }}">
-    <h6 ><b>Location:</b></h6>
+    <h6 style="margin-left: 20px; color: grey;">Location:</h6>
     <h7 class="locspace">Pennis and Dicke and also Balls</h7>
-    <h6 id="locospace"><b>Items on offer:</b> 3</h6>
-    <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink">View Profile</a>
+    <h6 id="itemsOffer">Items on offer:</h6>
+    <h7>3</h7>
+    <br>
+    <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink profileBtn">View Profile</a>
 </div>
 <div class="body-man">
 	<h5 class="headspace">New Requests</h5>
@@ -51,8 +53,13 @@
                         <a href="{{ url_for('borrow_item') }}">Borrow Item</a>
                     </div> -->
                 <div class="card-action valign-wrapper">
+<<<<<<< Updated upstream
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="http://ghostlypixels.com/wp-content/themes/illustrate-ghostly/images/profile-pic.png">
                     <p class="black-text personName valign">{{ borrow.lister.first_name(borrow.lister.nickname) }}</p>
+=======
+                    <img class="center-align profilePicSmall valign" id="ppSmall" src="{{borrow.lister.profile_picture}}">
+                    <p class="black-text personName valign">{{ borrow.lister.nickname }}</p>
+>>>>>>> Stashed changes
                     <a href="#" class="rounded waves-effect waves-light btn pink valign">LEND</a>
                 </div>
               </div>
