@@ -78,7 +78,7 @@ celerybeat-schedule
 
 # database files
 *.db
-db_repository/
+db_repository/*
 
 # dotenv
 .env
