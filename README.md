@@ -1,4 +1,4 @@
-# MateriaLoan
+# SupplyMe
 
-This is a project.- Kohilan
-I hope it doesnt suck -Harsh
+#Purpose
+To serve as an interactive platform for students to lend and borrow school materials.

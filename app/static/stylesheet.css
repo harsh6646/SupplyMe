@@ -38,6 +38,7 @@ main {
     margin-bottom: 30px;
     width: 70%;
     border-radius: 100px;
+    border: solid #dedede 5px;
 }
 
 .profilePicSmall{
@@ -79,6 +80,10 @@ main {
     white-space:nowrap;
     overflow:hidden;
     margin-right: 15px;
+}
+
+.personCard{
+    margin: 24px 24px 24px 0.5vw;
 }
 
 .titheight{
