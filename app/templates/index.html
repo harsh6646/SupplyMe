@@ -61,6 +61,7 @@
     <h5 class="headspace">Pending Items</h5>
     <div class="row">
         {% for pending in pitems %}
+    
             {% if (pending.user_click_name == g.user.nickname) or
                   (pending.user_lister_name == g.user.nickname) %}
             <div class="col s12 m4" style="min-width: 40%">
@@ -79,8 +80,9 @@
               </div>
             </div>
             {% endif %}
-        </div>
+        
         {% endfor %}
+        </div>
     
      <div class="fixed-action-btn horizontal">
     <a class="btn-floating btn-large pink">
