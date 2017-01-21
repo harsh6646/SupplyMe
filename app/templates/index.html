@@ -31,7 +31,7 @@
             
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ borrow.lister.profile_picture }}">
-                    <p class="black-text personName valign">{{ borrow.lister.first_name(borrow.lister.nickname) }}</p>
+                    <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=borrow.lister.nickname) }}">{{ borrow.lister.first_name(borrow.lister.nickname) }}</a>
                     <a href="{{ url_for('borrow_click', id=borrow.id) }}" class="rounded waves-effect waves-light btn pink valign">LEND</a>
                 </div>
               </div>
@@ -51,7 +51,7 @@
                   </div>
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
-                    <p class="black-text personName valign">{{ lend.lister.first_name(lend.lister.nickname) }}</p>
+                    <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=lend.lister.nickname) }}">{{ lend.lister.first_name(lend.lister.nickname) }}</a>
                     <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign">BORROW</a>
                 </div>
               </div>
@@ -74,7 +74,7 @@
             
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
-                    <p class="black-text personName valign">{{ pending.lister.first_name(pending.lister.nickname) }}</p>
+                    <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
                     <a class="rounded waves-effect waves-light btn pink valign" href="{{ url_for('pending', id=pending.id) }}">Confirm</a>
                 </div>
               </div>
