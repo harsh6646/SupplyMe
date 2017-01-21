@@ -202,6 +202,11 @@ def borrow_click(id):
 @app.route('/pending/<int:id>', methods=['GET', 'POST'])
 def pending(id):
     pending = Pending.query.get(id)
+    # get name of lister
+    lister_name = pending.user_lister_name
+    user = User.query.filter_by(nickname=lister_name).first()
+    user.items_offered = user.items_offered - 1
+    db.session.add(user)
     db.session.delete(pending)
     db.session.commit()
     flash('The transaction was successful')
