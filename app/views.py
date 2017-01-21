@@ -209,7 +209,7 @@ def upvote(id):
     return redirect(url_for('index'))
 
 
-@app.route('downvote/<int:id>', methods=['GET', 'POST'])
+@app.route('/downvote/<int:id>', methods=['GET', 'POST'])
 def downvote(id):
     user = User.query.get_or_404(id)
     user.karma = user.karma - 1
