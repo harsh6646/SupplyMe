@@ -79,7 +79,7 @@
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
                     <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
 
-                    <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;" href="modal1">Confirm</a>
+                    <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;" href="{{ url_for('pending', id=pending.id) }}">Confirm</a>
                 </div> 
               </div>
             </div>
