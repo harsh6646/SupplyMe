@@ -162,17 +162,16 @@ def borrow_item():
 @app.route('/lend/<int:id>', methods=['GET', 'POST'])
 def lend_click(id):
     # get the item to lend
-    lend_item = Borrow.query.get_or_404(id)
+    lend_item = Lend.query.get(id)
     lender_id = lend_item.user_id
     lender = User.query.get(lender_id)
-    print(lender)
-    pend_item = Pending(item_name=lend_item.item_name,
-                        item_location=lend_item.item_location,
-                        item_time_pickup=lend_item.item_time_pickup,
-                        user_click_name=g.user.nickname,
-                        user_lister_name=lender.nickname,
-                        lister=g.user)
-    db.session.add(pend_item)
+    pending_item = Pending(item_name=lend_item.item_name,
+                           item_location=lend_item.item_location,
+                           item_time_pickup=lend_item.item_time_pickup,
+                           user_click_name=g.user.nickname,
+                           user_lister_name=lender.nickname,
+                           lister=g.user)
+    db.session.add(pending_item)
     db.session.delete(lend_item)
     db.session.commit()
     flash('The item is now pending transaction!')
@@ -180,12 +179,25 @@ def lend_click(id):
 
 
 def borrow_click():
-    pass
+    # get the item that someone wants to borrow
+    borrow_item = Borrow.query.get(id)
+    lender_id = borrow_item.user_id
+    lender = User.query.get(lender_id)
+    pending_item = Pending(item_name=borrow_item.item_name,
+                           item_location=borrow_item.item_location,
+                           item_time_pickup=borrow_item.item_time_pickup,
+                           user_click_name=g.user.nickname,
+                           user_lister_name=lender.nickname,
+                           lister=g.user)
+    db.session.add(pending_item)
+    db.session.delete(borrow_item)
+    db.session.commit()
+    flash('The item is now pending transaction!')
+    return redirect(url_for('index'))
 
 
 @app.route('/pending/<int:id>', methods=['GET', 'POST'])
 def pending(id):
-
     pending = Pending.query.get(id)
     db.session.delete(pending)
     db.session.commit()
