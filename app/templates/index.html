@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+<script type="text/javascript">
+    $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });</script>
 
 {% block content %}
 <div class="sidebar">
@@ -57,6 +62,8 @@
               </div>
             </div>
         {% endfor %}
+        
+
 
     </div>
     <h5 class="headspace">Pending Items</h5>
@@ -75,7 +82,18 @@
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
                     <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
-                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('pending', id=pending.id) }}">Confirm</a>
+                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="#modal1">Confirm</a>
+                    
+                      <!-- Modal Structure -->
+                      <div id="modal1" class="modal">
+                        <div class="modal-content">
+                          <h4>Modal Header</h4>
+                          <p>A bunch of text</p>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                      </div>
                 </div>
               </div>
             </div>
