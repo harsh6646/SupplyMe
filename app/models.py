@@ -12,6 +12,7 @@ class User(db.Model):
     last_seen = db.Column(db.DateTime)
     profile_picture = db.Column(db.String(1000))
     items_offered = db.Column(db.Integer, default=0)
+    karma = db.Column(db.Integer, default=0)
 
     sell_items = db.relationship('Lend', backref='lister', lazy='dynamic')
     borrow_items = db.relationship('Borrow', backref='lister', lazy='dynamic')

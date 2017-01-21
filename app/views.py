@@ -199,6 +199,26 @@ def borrow_click(id):
     return redirect(url_for('index'))
 
 
+@app.route('/upvote/<int:id>', methods=['GET', 'POST'])
+def upvote(id):
+    user = User.query.get_or_404(id)
+    user.karma = user.karma + 1
+    db.session.add(user)
+    db.session.commit()
+    flash('Upvote received! :^)')
+    return redirect(url_for('index'))
+
+
+@app.route('downvote/<int:id>', methods=['GET', 'POST'])
+def downvote(id):
+    user = User.query.get_or_404(id)
+    user.karma = user.karma - 1
+    db.session.add(user)
+    db.session.commit()
+    flash('Downvote received! :^(')
+    return redirect(url_for('index'))
+
+
 @app.route('/pending/<int:id>', methods=['GET', 'POST'])
 def pending(id):
     pending = Pending.query.get(id)
