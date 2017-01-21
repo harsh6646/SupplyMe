@@ -3,7 +3,7 @@ from flask import request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
 from .forms import LoginForm, EditForm, LendItem, BorrowItem
-from .models import User, Lend, Borrow
+from .models import User, Lend, Borrow, Pending
 from datetime import datetime
 from .oauth import OAuthSignIn
 
@@ -14,8 +14,10 @@ from .oauth import OAuthSignIn
 def index():
     lend_items = Lend.query.all()
     borrow_items = Borrow.query.all()
+    pending_items = Pending.query.all()
     return render_template('index.html', user=user,
-                           litems=lend_items, bitems=borrow_items)
+                           litems=lend_items, bitems=borrow_items,
+                           pitems=pending_items)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -134,7 +136,7 @@ def lend_item():
         lend = Lend(item_name=form.item_name.data,
                     item_location=form.item_location.data,
                     item_time_pickup=form.item_time_pickup.data,
-                    lister=g.user)
+                    lister=g.user, item_status=0)
         db.session.add(lend)
         db.session.commit()
         flash('Your item is now live!')
@@ -149,12 +151,46 @@ def borrow_item():
         borrow = Borrow(item_name=form.item_name.data,
                         item_location=form.item_location.data,
                         item_time_pickup=form.item_time_pickup.data,
-                        lister=g.user)
+                        lister=g.user, item_status=0)
         db.session.add(borrow)
         db.session.commit()
         flash('Your item is now live!')
         return redirect(url_for('index'))
     return render_template('borrow_item.html', form=form)
+
+
+@app.route('/lend/<int:id>', methods=['GET', 'POST'])
+def lend_click(id):
+    # get the item to lend
+    lend_item = Borrow.query.get_or_404(id)
+    lender_id = lend_item.user_id
+    lender = User.query.get(lender_id)
+    print(lender)
+    pend_item = Pending(item_name=lend_item.item_name,
+                        item_location=lend_item.item_location,
+                        item_time_pickup=lend_item.item_time_pickup,
+                        user_click_name=g.user.nickname,
+                        user_lister_name=lender.nickname,
+                        lister=g.user)
+    db.session.add(pend_item)
+    db.session.delete(lend_item)
+    db.session.commit()
+    flash('The item is now pending transaction!')
+    return redirect(url_for('index'))
+
+
+def borrow_click():
+    pass
+
+
+@app.route('/pending/<int:id>', methods=['GET', 'POST'])
+def pending(id):
+
+    pending = Pending.query.get(id)
+    db.session.delete(pending)
+    db.session.commit()
+    flash('The transaction was successful')
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)

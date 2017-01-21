@@ -14,6 +14,8 @@ class User(db.Model):
 
     sell_items = db.relationship('Lend', backref='lister', lazy='dynamic')
     borrow_items = db.relationship('Borrow', backref='lister', lazy='dynamic')
+    pending_items = db.relationship('Pending', backref='lister',
+                                    lazy='dynamic')
 
     @staticmethod
     def make_unique_nickname(nickname):
@@ -65,6 +67,7 @@ class Lend(db.Model):
     item_location = db.Column(db.String(160))
     item_time_pickup = db.Column(db.String(120))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    item_status = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<Lend %r>' % (self.item_name)
@@ -78,6 +81,22 @@ class Borrow(db.Model):
     item_location = db.Column(db.String(160))
     item_time_pickup = db.Column(db.String(120))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    item_status = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<Borrow %r>' % (self.item_name)
+
+
+class Pending(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Item Details
+    item_name = db.Column(db.String(160))
+    item_location = db.Column(db.String(160))
+    item_time_pickup = db.Column(db.String(120))
+    user_click_name = db.Column(db.String(64))
+    user_lister_name = db.Column(db.String(64))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Pending %r>' % (self.item_name)
