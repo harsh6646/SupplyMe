@@ -64,6 +64,7 @@
       </div>
     <h5 class="headspace">New Items</h5>
     <h5 class="headspace">Pending Items</h5>
+    <div class="row">
         {% for pending in pitems %}
             {% if (pending.user_click_name == g.user.nickname) or
                   (pending.user_lister_name == g.user.nickname) %}
@@ -76,13 +77,14 @@
                   </div>
             
                 <div class="card-action valign-wrapper">
-                    <img class="center-align profilePicSmall valign" id="ppSmall" src="http://ghostlypixels.com/wp-content/themes/illustrate-ghostly/images/profile-pic.png">
+                    <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
                     <p class="black-text personName valign">{{ pending.lister.first_name(pending.lister.nickname) }}</p>
-                    <a href="{{ url_for('pending', id=pending.id) }}">Confirmed Transaction</a>
+                    <a class="rounded waves-effect waves-light btn pink valign" href="{{ url_for('pending', id=pending.id) }}">Confirm</a>
                 </div>
               </div>
             </div>
             {% endif %}
+        </div>
         {% endfor %}
     
      <div class="fixed-action-btn horizontal">
