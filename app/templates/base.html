@@ -1,74 +1,36 @@
 <html>
-    <head>
-        <title>UofTHacks</title>
-        <script src="/static/js/moment.min.js"></script>
 
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+<head>
+    <title>UofTHacks</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/static/stylesheet.css"> </head>
 
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-
-        <!-- Material Icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        <!-- Custom CSS -->
-        <style>
-            body {
-                background-color: #f9f9f9;
-                display: flex;
-                min-height: 100vh;
-                flex-direction: column;
-            }
-
-            main {
-                flex: 1 0 auto;
-            }
-        </style>
-    </head>
-
-    <body>
-        <!-- Main Content -->
-        <main>
-            <!-- Navigation bar -->
-            <nav>
-                <div class="nav-wrapper indigo">
-                    <div class="container">
-                      <a href="{{ url_for('index') }}" class="brand-logo">UofTHacks</a>
-                      {% if g.user.is_authenticated %}
-                          <ul id="nav-mobile" class="right hide-on-med-and-down">
-                            <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a></li>
-                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                          </ul>
-                      {% endif %}
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Error messages -->
-            <div class="container">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-                {% endwith %}
+<body>
+    <!-- Main Content -->
+    <main>
+        <!-- Navigation bar -->
+        <nav>
+            <div class="nav-wrapper white">
+                <div class="container"> <a href="{{ url_for('index') }}" class="pink-text brand-logo left">UofTHacks</a>
+                    <ul class="right hide-on-med-and-down">
+                        {% if not (g.user.is_authenticated) %}
+                        <li><a class="rounded waves-effect waves-light btn pink">SIGN IN</a></li>
+                        {% endif %} {% if g.user.is_authenticated %}
+                        <li><a href="{{ url_for('logout') }}" class="rounded waves-effect waves-light btn pink">SIGN OUT</a></li>{% endif %}
+                    </ul></div>
             </div>
-            
-            <!-- Space for content that inherits this -->
-            {% block content %}{% endblock %}
-        </main>
+        </nav>
+        <!-- Error messages -->
+        <div class="container"> {% with messages = get_flashed_messages() %} {% if messages %}
+            <ul> {% for message in messages %}
+                <li>{{ message }}</li> {% endfor %} </ul> {% endif %} {% endwith %} </div>
+        <!-- Space for content that inherits this -->{% block content %}{% endblock %} </main>
+    <!-- Footer -->
+</body>
 
-        <!-- Footer -->
-        <footer class="page-footer indigo">
-            <div class="footer-copyright">
-                <div class="container">
-                    <span class="grey-text text-lighten-4">UofT Hacks</span>
-                </div>
-            </div>
-        </footer>
-    </body>
 </html>

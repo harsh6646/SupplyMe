@@ -1,0 +1,27 @@
+body {
+    background-color: #f9f9f9;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.rounded {
+    border-radius: 26px;
+}
+
+.sidebar{
+    width: 30%;
+    padding: 5%;
+}
+
+.profilePic{
+    width: 50%;
+}
+
+#personName{
+    font-size: 1 rem;
+}
