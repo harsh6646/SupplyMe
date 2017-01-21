@@ -1,0 +1,72 @@
+body {
+    background-color: #f9f9f9;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.body-man {
+   width: 70%;
+   display: inline-block;
+   margin:0;
+   float:right;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.rounded {
+    border-radius: 26px;
+}
+
+.sidebar{
+    width: 30%;
+    padding: 5%;
+    display: inline-block;
+    margin-right: 0px;
+    float:left;
+}
+
+.profilePic{
+    margin: 10px 0 30px 30px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    width: 70%;
+}
+
+.profilePicSmall{
+    width: 25%;
+}
+
+#ppSmall {
+    margin-right: 15px;
+}
+
+#personName{
+    font-size: 1 rem;
+}
+
+.locspace{
+    margin-top: 100px;
+}
+
+#locospace{
+    margin-bottom: 30px;
+}
+
+.headspace{
+    margin-top: 30px;
+    color: grey;
+}
+
+.cardIcon{
+    margin-right: 10px;
+}
+.personName{
+    width: 50px;
+    padding-right: -10px;
+    white-space:nowrap;
+    overflow:hidden;
+    margin-right: 15px;
+}
