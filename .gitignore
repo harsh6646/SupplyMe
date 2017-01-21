@@ -1,0 +1,11 @@
+pip-selfcheck.json
+*.sublime-workspace
+*.sublime-project
+
+*.pyc
+*.pyo
+app.db
+search.db
+flask
+*.mo
+TODO
