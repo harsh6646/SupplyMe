@@ -9,6 +9,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://use.fontawesome.com/32134a2b39.js"></script>
     <link rel="stylesheet" href="/static/stylesheet.css">
+    <script type="text/javascript">
+        function toaster(msg){
+            Materialize.toast(msg, 4000);
+        }
+    </script>
 </head>
     
 
@@ -32,7 +37,11 @@
         <!-- Error messages -->
         <div class="container"> {% with messages = get_flashed_messages() %} {% if messages %}
             <ul> {% for message in messages %}
-                <li>{{ message }}</li> {% endfor %} 
+                <li>
+                    <script type="text/javascript">
+                        toaster("{{ message }}");
+                    </script>
+                </li> {% endfor %} 
             </ul> 
         {% endif %} {% endwith %} </div>
         <!-- Space for content that inherits this -->{% block content %}{% endblock %} </main>

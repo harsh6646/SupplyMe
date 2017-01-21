@@ -19,9 +19,6 @@
     {% endfor %}
     </ul>
     <div class="row">
-        {% for lend in litems %}
-            {{ lend }}
-        {% endfor %}
         {% for borrow in bitems %}
             <div class="col s12 m4" style="min-width: 40%">
               <div class="card white">
@@ -31,27 +28,6 @@
                     <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ borrow.item_time_pickup }}</p>
                   </div>
             
-
-            <!-- 
-            <div class="col s7">
-                <div class="card">
-                    <div class="card-content">
-                        Lend Items:<br>
-                        {% for lend in litems %}
-                            {{ lend }}
-                        {% endfor %}
-                        potato
-                        <br>
-                        Borrow Items:<br>
-                        {% for borrow in bitems %}
-                            {{ borrow.item_name }}<br>
-                            {{ borrow.item_location }}
-                            {{ borrow.item_time_pickup }}
-                        {% endfor %}
-                        <br>
-                        <a href="{{ url_for('lend_item') }}">Lend Item</a>
-                        <a href="{{ url_for('borrow_item') }}">Borrow Item</a>
-                    </div> -->
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ borrow.lister.profile_picture }}">
                     <p class="black-text personName valign">{{ borrow.lister.first_name(borrow.lister.nickname) }}</p>
@@ -63,6 +39,25 @@
 
       </div>
     <h5 class="headspace">New Items</h5>
+    <div class="row">
+        {% for lend in litems %}
+            <div class="col s12 m4" style="min-width: 40%">
+              <div class="card white">
+                <div class="card-content white-text">
+                    <span class="card-title black-text" style="line-height: 25px;"><b>{{ lend.item_name }}</b></span>
+                    <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ lend.item_location }}</p>
+                    <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ lend.item_time_pickup }}</p>
+                  </div>
+                <div class="card-action valign-wrapper">
+                    <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
+                    <p class="black-text personName valign">{{ lend.lister.first_name(lend.lister.nickname) }}</p>
+                    <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign">BORROW</a>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+
+    </div>
     <h5 class="headspace">Pending Items</h5>
     <div class="row">
         {% for pending in pitems %}
@@ -93,7 +88,7 @@
     </a>
     <ul>
       <li><a class="btn-floating red" href="{{ url_for('borrow_item') }}"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1" href="{{ url_for('borrow_item') }}">
+      <li><a class="btn-floating yellow darken-1" href="{{ url_for('lend_item') }}">
       <i class="material-icons">format_quote</i></a></li>
     </ul>
   </div>
