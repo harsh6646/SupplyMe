@@ -1,30 +1,58 @@
 from flask import render_template, flash, redirect, session, url_for
 from flask import request, g
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, oid
-from .forms import LoginForm, EditForm
-from .models import User
+from app import app, db, lm
+from .forms import LoginForm, EditForm, LendItem, BorrowItem
+from .models import User, Lend, Borrow
 from datetime import datetime
+from .oauth import OAuthSignIn
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html', user=user)
+    lend_items = Lend.query.all()
+    borrow_items = Borrow.query.all()
+    return render_template('index.html', user=user,
+                           litems=lend_items, bitems=borrow_items)
 
 
 @app.route('/login', methods=['GET', 'POST'])
-@oid.loginhandler
 def login():
     if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        session['remember_me'] = form.remember_me.data
-        return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
+        pass
     return render_template('login.html', title="Sign in",
-                           form=form, providers=app.config['OPENID_PROVIDERS'])
+                           form=form)
+
+
+@app.route('/authorize/<provider>')
+def oauth_authorize(provider):
+    if not current_user.is_anonymous:
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    return oauth.authorize()
+
+
+@app.route('/callback/<provider>')
+def oauth_callback(provider):
+    if not current_user.is_anonymous:
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    social_id, username, email = oauth.callback()
+    if social_id is None:
+        flash('Authentication failed.')
+        return redirect(url_for('index'))
+    user = User.query.filter_by(social_id=social_id).first()
+    if not user:
+        user = User(social_id=social_id, nickname=username, email=email)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user, True)
+    return redirect(url_for('index'))
 
 
 @lm.user_loader
@@ -32,7 +60,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@oid.after_login
 def after_login(resp):
     if ((resp.email is None) or (resp.email == '')):
         flash('Invalid login. Please try again.')
@@ -45,10 +72,6 @@ def after_login(resp):
             nickname = resp.email.split('@')[0]
         user = User(nickname=nickname, email=resp.email)
         db.session.add(user)
-        db.session.commit()
-
-        # make the user follow themself
-        db.session.add(user.follow(user))
         db.session.commit()
     remember_me = False
 
@@ -91,6 +114,7 @@ def edit():
     if (form.validate_on_submit()):
         g.user.nickname = form.nickname.data
         g.user.about_me = form.about_me.data
+        g.user.location = form.location.data
         db.session.add(g.user)
         db.session.commit()
         flash('Your changes have been saved.')
@@ -98,7 +122,38 @@ def edit():
     else:
         form.nickname.data = g.user.nickname
         form.about_me.data = g.user.about_me
+        form.location.data = g.user.location
     return render_template('edit.html', form=form)
+
+
+@app.route('/lend_item', methods=['GET', 'POST'])
+def lend_item():
+    form = LendItem()
+    if (form.validate_on_submit()):
+        lend = Lend(item_name=form.item_name.data,
+                    item_location=form.item_location.data,
+                    item_time_pickup=form.item_time_pickup.data,
+                    lister=g.user)
+        db.session.add(lend)
+        db.session.commit()
+        flash('Your item is now live!')
+        return redirect(url_for('index'))
+    return render_template('lend_item.html', form=form)
+
+
+@app.route('/borrow_item', methods=['GET', 'POST'])
+def borrow_item():
+    form = BorrowItem()
+    if (form.validate_on_submit()):
+        borrow = Borrow(item_name=form.item_name.data,
+                        item_location=form.item_location.data,
+                        item_time_pickup=form.item_time_pickup.data,
+                        lister=g.user)
+        db.session.add(borrow)
+        db.session.commit()
+        flash('Your item is now live!')
+        return redirect(url_for('index'))
+    return render_template('borrow_item.html', form=form)
 
 
 @app.errorhandler(404)

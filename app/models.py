@@ -4,10 +4,15 @@ from hashlib import md5
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    social_id = db.Column(db.String(64), nullable=False, unique=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     about_me = db.Column(db.String(140))
+    location = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
+
+    sell_items = db.relationship('Lend', backref='lister', lazy='dynamic')
+    borrow_items = db.relationship('Borrow', backref='lister', lazy='dynamic')
 
     @staticmethod
     def make_unique_nickname(nickname):
@@ -44,3 +49,29 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.nickname)
+
+
+class Lend(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Item Details
+    item_name = db.Column(db.String(160))
+    item_location = db.Column(db.String(160))
+    item_time_pickup = db.Column(db.String(120))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Lend %r>' % (self.item_name)
+
+
+class Borrow(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Item Details
+    item_name = db.Column(db.String(160))
+    item_location = db.Column(db.String(160))
+    item_time_pickup = db.Column(db.String(120))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Borrow %r>' % (self.item_name)

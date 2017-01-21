@@ -17,7 +17,20 @@
         <div class="col s7">
             <div class="card">
                 <div class="card-content">
-                    Sick
+                    Lend Items:<br>
+                    {% for lend in litems %}
+                        {{ lend }}
+                    {% endfor %}
+                    <br>
+                    Borrow Items:<br>
+                    {% for borrow in bitems %}
+                        {{ borrow.item_name }}<br>
+                        {{ borrow.item_location }}
+                        {{ borrow.item_time_pickup }}
+                    {% endfor %}
+                    <br>
+                    <a href="{{ url_for('lend_item') }}">Lend Item</a>
+                    <a href="{{ url_for('borrow_item') }}">Borrow Item</a>
                 </div>
             </div>
         </div>

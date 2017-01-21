@@ -7,9 +7,11 @@ class LoginForm(Form):
     openid = StringField('openid', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
 
+
 class EditForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])
+    location = StringField('location', validators=[DataRequired()])
 
     def __init__(self, original_nickname, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
@@ -25,3 +27,15 @@ class EditForm(Form):
             self.nickname.errors.append('This nickname is already in use. Please choose another one')
             return False
         return True
+
+
+class LendItem(Form):
+    item_name = StringField('item_name', validators=[DataRequired()])
+    item_location = StringField('item_location', validators=[DataRequired()])
+    item_time_pickup = StringField('item_time_pickup', validators=[DataRequired()])
+
+
+class BorrowItem(Form):
+    item_name = StringField('item_name', validators=[DataRequired()])
+    item_location = StringField('item_location', validators=[DataRequired()])
+    item_time_pickup = StringField('item_time_pickup', validators=[DataRequired()])

@@ -19,6 +19,9 @@
                         {% if user.last_seen %}
                             <p><em>Last seen on: {{ user.last_seen }}</em></p>
                         {% endif %}
+                        {% if user.location %}
+                            <p>Current location: {{ user.location }}</p>
+                        {% endif %}
                     </div>
                     <div class="card-action">
                         {% if user.id == g.user.id %}
