@@ -28,15 +28,21 @@ main {
     float:left;
 }
 
+.profileBtn{
+    margin-left: 30px;
+}
+
 .profilePic{
     margin: 10px 0 30px 30px;
     margin-top: 10px;
     margin-bottom: 30px;
     width: 70%;
+    border-radius: 100px;
 }
 
 .profilePicSmall{
     width: 20%;
+    border-radius: 100px;
 }
 
 #ppSmall {
@@ -49,10 +55,14 @@ main {
 
 .locspace{
     margin-top: 100px;
+    margin-left: 20px
 }
 
-#locospace{
+#itemsOffer{
     margin-bottom: 30px;
+    margin-left: 20px;
+    color: grey;
+    display:inline-block;
 }
 
 .headspace{
@@ -69,4 +79,8 @@ main {
     white-space:nowrap;
     overflow:hidden;
     margin-right: 15px;
+}
+
+.titheight{
+    margin-bottom: 20px;
 }
