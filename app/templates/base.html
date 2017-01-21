@@ -28,7 +28,7 @@
                 <div class="container"> <a href="{{ url_for('index') }}" class="pink-text brand-logo left">SupplyMe</a>
                     <ul class="right hide-on-med-and-down">
                         {% if not (g.user.is_authenticated) %}
-                        <li><a class="rounded waves-effect waves-light btn pink">SIGN IN</a></li>
+                        <li><a href="{{ url_for('oauth_authorize', provider='facebook') }}"" class="rounded waves-effect waves-light btn pink">SIGN IN</a></li>
                         {% endif %} {% if g.user.is_authenticated %}
                         <li><a href="{{ url_for('logout') }}" class="rounded waves-effect waves-light btn pink">SIGN OUT</a></li>{% endif %}
                     </ul></div>
