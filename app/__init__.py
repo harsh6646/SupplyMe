@@ -14,3 +14,5 @@ lm.init_app(app)
 lm.login_view = 'login'
 
 from app import views
+from .momentjs import momentjs
+app.jinja_env.globals['momentjs'] = momentjs
