@@ -137,7 +137,9 @@ def lend_item():
                     item_location=form.item_location.data,
                     item_time_pickup=form.item_time_pickup.data,
                     lister=g.user, item_status=0)
+        g.user.items_offered = g.user.items_offered + 1
         db.session.add(lend)
+        db.session.add(g.user)
         db.session.commit()
         flash('Your item is now live!')
         return redirect(url_for('index'))

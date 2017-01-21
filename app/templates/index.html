@@ -8,7 +8,7 @@
     <h7 class="locspace">{{ g.user.location }}</h7>
     <br>
     <h6 id="itemsOffer">Items on offer:</h6>
-    <h7>3</h7>
+    <h7>{{ g.user.items_offered }}</h7>
     <br>
     <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink profileBtn">View Profile</a>
 </div>
