@@ -164,7 +164,7 @@ def borrow_item():
 @app.route('/lend/<int:id>', methods=['GET', 'POST'])
 def lend_click(id):
     # get the item to lend
-    lend_item = Lend.query.get(id)
+    lend_item = Lend.query.get_or_404(id)
     lender_id = lend_item.user_id
     lender = User.query.get(lender_id)
     pending_item = Pending(item_name=lend_item.item_name,
@@ -181,9 +181,9 @@ def lend_click(id):
 
 
 @app.route('/borrow/<int:id>', methods=['GET', 'POST'])
-def borrow_click():
+def borrow_click(id):
     # get the item that someone wants to borrow
-    borrow_item = Borrow.query.get(id)
+    borrow_item = Borrow.query.get_or_404(id)
     lender_id = borrow_item.user_id
     lender = User.query.get(lender_id)
     pending_item = Pending(item_name=borrow_item.item_name,

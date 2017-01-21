@@ -32,7 +32,7 @@
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ borrow.lister.profile_picture }}">
                     <p class="black-text personName valign">{{ borrow.lister.first_name(borrow.lister.nickname) }}</p>
-                    <a href="{{ url_for('lend_click', id=borrow.id) }}" class="rounded waves-effect waves-light btn pink valign">LEND</a>
+                    <a href="{{ url_for('borrow_click', id=borrow.id) }}" class="rounded waves-effect waves-light btn pink valign">LEND</a>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
                     <p class="black-text personName valign">{{ lend.lister.first_name(lend.lister.nickname) }}</p>
-                    <a href="{{ url_for('borrow_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign">BORROW</a>
+                    <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign">BORROW</a>
                 </div>
               </div>
             </div>
