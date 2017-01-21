@@ -40,11 +40,13 @@ class EditForm(Form):
 
 class LendItem(Form):
     item_name = StringField('item_name', validators=[DataRequired()])
-    item_location = StringField('item_location', validators=[DataRequired()])
+    item_location = SelectField('item_location', choices=locations,
+                                validators=[DataRequired()])
     item_time_pickup = StringField('item_time_pickup', validators=[DataRequired()])
 
 
 class BorrowItem(Form):
     item_name = StringField('item_name', validators=[DataRequired()])
-    item_location = StringField('item_location', validators=[DataRequired()])
+    item_location = SelectField('item_location', choices=locations,
+                                validators=[DataRequired()])
     item_time_pickup = StringField('item_time_pickup', validators=[DataRequired()])
