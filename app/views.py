@@ -180,6 +180,7 @@ def lend_click(id):
     return redirect(url_for('index'))
 
 
+@app.route('/borrow/<int:id>', methods=['GET', 'POST'])
 def borrow_click():
     # get the item that someone wants to borrow
     borrow_item = Borrow.query.get(id)

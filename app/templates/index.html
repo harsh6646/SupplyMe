@@ -52,7 +52,7 @@
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
                     <p class="black-text personName valign">{{ lend.lister.first_name(lend.lister.nickname) }}</p>
-                    <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign">BORROW</a>
+                    <a href="{{ url_for('borrow_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign">BORROW</a>
                 </div>
               </div>
             </div>
@@ -62,7 +62,6 @@
     <h5 class="headspace">Pending Items</h5>
     <div class="row">
         {% for pending in pitems %}
-    
             {% if (pending.user_click_name == g.user.nickname) or
                   (pending.user_lister_name == g.user.nickname) %}
             <div class="col s12 m4" style="min-width: 40%">
