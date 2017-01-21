@@ -39,6 +39,10 @@ main {
     width: 25%;
 }
 
+#ppSmall {
+    margin-right: 15px;
+}
+
 #personName{
     font-size: 1 rem;
 }
@@ -61,4 +65,8 @@ main {
 }
 .personName{
     width: 50px;
+    padding-right: -10px;
+    white-space:nowrap;
+    overflow:hidden;
+    margin-right: 15px;
 }
