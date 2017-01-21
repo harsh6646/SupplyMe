@@ -29,9 +29,14 @@ main {
 }
 
 .profilePic{
+    margin: 10px 0 30px 30px;
     margin-top: 10px;
     margin-bottom: 30px;
-    width: 50%;
+    width: 70%;
+}
+
+.profilePicSmall{
+    width: 25%;
 }
 
 #personName{
@@ -49,4 +54,11 @@ main {
 .headspace{
     margin-top: 30px;
     color: grey;
+}
+
+.cardIcon{
+    margin-right: 10px;
+}
+.personName{
+    width: 50px;
 }
