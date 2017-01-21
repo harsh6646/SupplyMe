@@ -10,6 +10,7 @@ class User(db.Model):
     about_me = db.Column(db.String(140))
     location = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
+    profile_picture = db.Column(db.String(1000))
 
     sell_items = db.relationship('Lend', backref='lister', lazy='dynamic')
     borrow_items = db.relationship('Borrow', backref='lister', lazy='dynamic')
