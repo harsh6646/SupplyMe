@@ -2,8 +2,36 @@
 
 {% block content %}
 <div class="sidebar">
-    <h3>{{ g.user.nickname }}</h3>
+    <h5>{{ g.user.nickname }}</h5>
     <img class="profilePic" src="http://ghostlypixels.com/wp-content/themes/illustrate-ghostly/images/profile-pic.png">
-    
+    <h6>Location:</h6>
+    <h7 class="locspace">Pennis and Dicke and also Balls</h7>
+    <h6 id="locospace">Items on offer: <!--{{ g.user.nickname }}--></h6>
+    <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink">View Profile</a>
+</div>
+<div class="body-man">
+	<h5 class="headspace">New Requests</h5>
+	<ul id="navigation">
+    {% for item in navigation %}
+        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
+    </ul>
+    <div class="row">
+        <div class="col s12 m4">
+          <div class="card pink darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Calculator</span>
+              <p>Suck my fucking dick Dino you cocksucker, get cucked, you fucking kike.  Ur mom is an faget.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <h5 class="headspace">New Items</h5>
+
+
 </div>
 {% endblock %}
