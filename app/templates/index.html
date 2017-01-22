@@ -20,7 +20,7 @@
     <div class="row">
         <h5 class="headspace">New Requests</h5>
         {% for borrow in bitems %}
-            <div class="col s12 m4" style="min-width: 40%">
+            <div class="col s12 m4" style="min-width: 45%">
               <div class="card white" style="margin-left: -12px">
                 <div class="card-content white-text">
                     <span class="card-title black-text" style="line-height: 25px;"><b>{{ borrow.item_name }}</b></span>
@@ -31,6 +31,17 @@
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ borrow.lister.profile_picture }}">
                     <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=borrow.lister.nickname) }}">{{ borrow.lister.first_name(borrow.lister.nickname) }}</a>
+                    {% if ((borrow.lister.karma >= 0) and (borrow.lister.karma < 5)) %}
+                    <img src="/static/stone.png" class="rank" >
+                    {% elif ((borrow.lister.karma >= 5) and (borrow.lister.karma < 15)) %}
+                      <img src="/static/bronze.png" class="rank">
+                    {% elif ((borrow.lister.karma >= 15) and (borrow.lister.karma < 30)) %}
+                      <img src="/static/silver.png" class="rank">
+                    {% elif ((borrow.lister.karma >= 30) and (borrow.lister.karma < 60)) %}
+                      <img src="/static/gold.png" class="rank"> 
+                    {% elif (borrow.lister.karma >= 60) %}
+                      <img src="/static/platinum.png" class="rank" > 
+                    {% endif %}
                     <a href="{{ url_for('borrow_click', id=borrow.id) }}" class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;">LEND</a>
                 </div>
               </div>
@@ -41,7 +52,7 @@
     <h5 class="headspace">New Items</h5>
     <div class="row">
         {% for lend in litems %}
-            <div class="col s12 m4" style="min-width: 40%">
+            <div class="col s12 m4" style="min-width: 50%">
               <div class="card white" style="margin-left: -12px">
                 <div class="card-content white-text">
                     <span class="card-title black-text" style="line-height: 25px;"><b>{{ lend.item_name }}</b></span>
@@ -51,6 +62,17 @@
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
                     <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=lend.lister.nickname) }}">{{ lend.lister.first_name(lend.lister.nickname) }}</a>
+                    {% if ((lend.lister.karma >= 0) and (lend.lister.karma < 5)) %}
+                    <img src="/static/stone.png" class="rank" >
+                    {% elif ((lend.lister.karma >= 5) and (lend.lister.karma < 15)) %}
+                      <img src="/static/bronze.png" class="rank">
+                    {% elif ((lend.lister.karma >= 15) and (lend.lister.karma < 30)) %}
+                      <img src="/static/silver.png" class="rank">
+                    {% elif ((lend.lister.karma >= 30) and (lend.lister.karma < 60)) %}
+                      <img src="/static/gold.png" class="rank"> 
+                    {% elif (lend.lister.karma >= 60) %}
+                      <img src="/static/platinum.png" class="rank" > 
+                    {% endif %}
                     <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;">BORROW</a>
                 </div>
               </div>
@@ -80,6 +102,7 @@
                         <div class="card-action valign-wrapper">
                             <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
                             <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
+                    
                             <!--<a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_up</a>
                             <a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_down</a>
                             <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;">Cancel</a>-->

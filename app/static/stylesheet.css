@@ -27,6 +27,11 @@ main {
     border-radius: 26px;
 }
 
+.rank{
+    height: 16px;
+    display: inline-block;
+}
+
 .sidebar{
     width: 30%;
     /*min-width:246px;*/
