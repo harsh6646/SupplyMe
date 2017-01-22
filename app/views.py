@@ -172,6 +172,8 @@ def lend_click(id):
     lend_item = Lend.query.get_or_404(id)
     lender_id = lend_item.user_id
     lender = User.query.get(lender_id)
+    print(g.user.nickname)
+    print(lender.nickname)
     pending_item = Pending(item_name=lend_item.item_name,
                            item_location=lend_item.item_location,
                            item_time_pickup=lend_item.item_time_pickup,
@@ -191,6 +193,8 @@ def borrow_click(id):
     borrow_item = Borrow.query.get_or_404(id)
     lender_id = borrow_item.user_id
     lender = User.query.get(lender_id)
+    print(g.user.nickname)
+    print(lender.nickname)
     pending_item = Pending(item_name=borrow_item.item_name,
                            item_location=borrow_item.item_location,
                            item_time_pickup=borrow_item.item_time_pickup,
@@ -223,6 +227,10 @@ def upvote(id):
     db.session.add(item)
     db.session.commit()
     flash('Upvote received! :^)')
+
+    # give it to pending
+    if (item.item_status <= 0):
+        pending(id)
     return redirect(url_for('index'))
 
 
