@@ -73,37 +73,78 @@
         {% for pending in pitems %}
             {% if (pending.user_click_name == g.user.nickname) or
                   (pending.user_lister_name == g.user.nickname) %}
-            <div class="col s12 m4" style="min-width: 40%">
-              <div class="card white" style="margin-left: -12px">
-                <div class="card-content white-text">
-                    <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
-                    <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
-                    <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
-                  </div>
-            
-                <div class="card-action valign-wrapper">
-                    <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
-                    <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
-
-                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('upvote', id=pending.id) }}">Upvote</a>
-
-                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('downvote', id=pending.id) }}">Downvote</a>
-
-                    <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="#modal1">Confirm</a>
+                {% if (pending.user_click_name == g.user.nickname) and
+                      (pending.voted_clicker == 1) %)
+                      <!-- show nothing -->
+                {% else %}
+                    <div class="col s12 m4" style="min-width: 40%">
+                      <div class="card white" style="margin-left: -12px">
+                        <div class="card-content white-text">
+                            <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
+                            <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
+                            <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
+                          </div>
                     
-                      <!-- Modal Structure -->
-                      <div id="modal1" class="modal">
-                        <div class="modal-content">
-                          <h4>Modal Header</h4>
-                          <p>A bunch of text</p>
-                        </div>
-                        <div class="modal-footer">
-                          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        <div class="card-action valign-wrapper">
+                            <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
+                            <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
+
+                            <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('upvote', id=pending.id) }}">Upvote</a>
+                                <br> <br> <br> <br>
+                            <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('downvote', id=pending.id) }}">Downvote</a>
+                              <br>   <br> <br>
+                            <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="#modal1">Confirm</a><br>
+                            
+                              <!-- Modal Structure -->
+                              <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                  <h4>Modal Header</h4>
+                                  <p>A bunch of text</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                              </div>
                         </div>
                       </div>
-                </div>
-              </div>
-            </div>
+                    </div>
+                {% endif %}
+                {% if (pending.user_lister_name == g.user.nickname) and
+                      (pending.voted_lister == 1) %)
+                      <!-- show nothing -->
+                {% else %}
+                    <div class="col s12 m4" style="min-width: 40%">
+                      <div class="card white" style="margin-left: -12px">
+                        <div class="card-content white-text">
+                            <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
+                            <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
+                            <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
+                          </div>
+                    
+                        <div class="card-action valign-wrapper">
+                            <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
+                            <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
+
+                            <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('upvote', id=pending.id) }}">Upvote</a>
+                                <br> <br> <br> <br>
+                            <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="{{ url_for('downvote', id=pending.id) }}">Downvote</a>
+                              <br>   <br> <br>
+                            <a class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;" href="#modal1">Confirm</a><br>
+                            
+                              <!-- Modal Structure -->
+                              <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                  <h4>Modal Header</h4>
+                                  <p>A bunch of text</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                                </div>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endif %}
             {% endif %}
         
         {% endfor %}

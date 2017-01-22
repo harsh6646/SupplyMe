@@ -107,7 +107,12 @@ def user(nickname):
     if (user is None):
         flash('User %s not found.' % nickname)
         return redirect(url_for('index'))
-    return render_template('user.html', user=user)
+    lend_items = user.sell_items
+    borrow_items = user.borrow_items
+    pending_items = user.pending_items
+    return render_template('user.html', user=user, lend_items=lend_items,
+                           borrow_items=borrow_items,
+                           pending_items=pending_items)
 
 
 @app.route('/edit', methods=['GET', 'POST'])
@@ -201,19 +206,43 @@ def borrow_click(id):
 
 @app.route('/upvote/<int:id>', methods=['GET', 'POST'])
 def upvote(id):
-    user = User.query.get_or_404(id)
-    user.karma = user.karma + 1
+    item = Pending.query.get_or_404(id)
+    item.item_status = item.item_status - 1
+    user_click_name = item.user_click_name
+    user_lister_name = item.user_lister_name
+
+    if (user_lister_name == g.user.nickname):
+        user = User.query.filter_by(nickname=user_click_name).first()
+        user.karma = user.karma + 1
+        item.voted_lister = 1
+    elif (user_click_name == g.user.nickname):
+        user = User.query.filter_by(nickname=user_lister_name).first()
+        user.karma = user.karma + 1
+        item.voted_clicker = 1
     db.session.add(user)
+    db.session.add(item)
     db.session.commit()
     flash('Upvote received! :^)')
     return redirect(url_for('index'))
 
 
-@app.route('downvote/<int:id>', methods=['GET', 'POST'])
+@app.route('/downvote/<int:id>', methods=['GET', 'POST'])
 def downvote(id):
-    user = User.query.get_or_404(id)
-    user.karma = user.karma - 1
+    item = Pending.query.get_or_404(id)
+    item.item_status = item.item_status - 1
+    user_click_name = item.user_click_name
+    user_lister_name = item.user_lister_name
+
+    if (user_lister_name == g.user.nickname):
+        user = User.query.filter_by(nickname=user_click_name).first()
+        user.karma = user.karma - 1
+        item.voted_lister =  1
+    elif (user_click_name == g.user.nickname):
+        user = User.query.filter_by(nickname=user_lister_name).first()
+        user.karma = user.karma - 1
+        item.voted_clicker = 1
     db.session.add(user)
+    db.session.add(item)
     db.session.commit()
     flash('Downvote received! :^(')
     return redirect(url_for('index'))
@@ -225,9 +254,12 @@ def pending(id):
     # get name of lister
     lister_name = pending.user_lister_name
     user = User.query.filter_by(nickname=lister_name).first()
-    user.items_offered = user.items_offered - 1
+    if (user.items_offered > 0):
+        user.items_offered = user.items_offered - 1
     db.session.add(user)
-    db.session.delete(pending)
+
+    if (pending.item_status <= 0):
+        db.session.delete(pending)
     db.session.commit()
     flash('The transaction was successful')
     return redirect(url_for('index'))

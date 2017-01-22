@@ -74,6 +74,9 @@ class Lend(db.Model):
     def __repr__(self):
         return '<Lend %r>' % (self.item_name)
 
+    def type_listing(self):
+        return('Lend')
+
 
 class Borrow(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,6 +91,9 @@ class Borrow(db.Model):
     def __repr__(self):
         return '<Borrow %r>' % (self.item_name)
 
+    def type_listing(self):
+        return 'Borrow'
+
 
 class Pending(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -100,5 +106,12 @@ class Pending(db.Model):
     user_lister_name = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    item_status = db.Column(db.Integer, default=2)
+    voted_clicker = db.Column(db.Integer, default=0)
+    voted_lister = db.Column(db.Integer, default=0)
+
     def __repr__(self):
         return '<Pending %r>' % (self.item_name)
+
+    def type_listing(self):
+        return 'Pending'

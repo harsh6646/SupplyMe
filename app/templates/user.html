@@ -32,7 +32,46 @@
         </div>
 
         <div class="col s7">
-            <h4 class="header indigo-text">User Stuff</h4>
+            <h4 class="header indigo-text">Listed Items</h4>
+
+            {% for item in lend_items %}
+                <div class="col s12 m4" style="min-width: 40%">
+                  <div class="card white" style="margin-left: -12px">
+                    <div class="card-content white-text">
+                        <span class="card-title black-text" style="line-height: 25px;"><b>{{ item.item_name }}</b></span>
+                        <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ item.item_location }}</p>
+                        <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ item.item_time_pickup }}</p>
+                        <p class="black-text"><i class="grey-text"></i>Posting type: {{ item.type_listing() }}</p>
+                      </div>
+                  </div>
+                </div>
+            {% endfor %}
+
+            {% for item in borrow_items %}
+                <div class="col s12 m4" style="min-width: 40%">
+                  <div class="card white" style="margin-left: -12px">
+                    <div class="card-content white-text">
+                        <span class="card-title black-text" style="line-height: 25px;"><b>{{ item.item_name }}</b></span>
+                        <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ item.item_location }}</p>
+                        <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ item.item_time_pickup }}</p>
+                        <p class="black-text"><i class="grey-text"></i>Posting type: {{ item.type_listing() }}</p>
+                      </div>
+                  </div>
+                </div>
+            {% endfor %}
+
+            {% for item in pending_items %}
+                <div class="col s12 m4" style="min-width: 40%">
+                  <div class="card white" style="margin-left: -12px">
+                    <div class="card-content white-text">
+                        <span class="card-title black-text" style="line-height: 25px;"><b>{{ item.item_name }}</b></span>
+                        <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ item.item_location }}</p>
+                        <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ item.item_time_pickup }}</p>
+                        <p class="black-text"><i class="grey-text"></i>Posting type: {{ item.type_listing() }}</p>
+                      </div>
+                  </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
