@@ -3,163 +3,175 @@
 <script type="text/javascript" src="path_to/jquery.leanModal.min.js"></script>
 {% block content %}
 <div class="container">
-<div class="sidebar">
-    <h5 class="center-align">{{ g.user.nickname }}</h5>
-    <img class="center-align profilePic" src="{{ g.user.profile_picture }}">
-    <h6 style="margin-left: 20px; color: grey;">Location:</h6>
-    <h7 class="locspace">{{ g.user.location }}</h7>
-    <br>
-    <h6 id="itemsOffer">Items on offer:</h6>
-    <h7>{{ g.user.items_offered }}</h7><br>
-    <h6 id="itemsOffer">Karma:</h6>
-    <h7>{{ g.user.karma }}</h7>
-    <br>
-    <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink profileBtn">View Profile</a>
-</div>
-<div class="body-man">
-    <div class="row">
-        <h5 class="headspace">New Requests</h5>
-        {% for borrow in bitems %}
+    <div class="sidebar">
+        <h5 class="center-align">{{ g.user.nickname }}</h5>
+        {% if ((g.user.karma >= 0) and (g.user.karma < 5)) %}
+            <img src="/static/stone.png" class="ranklrg" >
+        {% elif ((g.user.karma >= 5) and (g.user.karma < 15)) %}
+            <img src="/static/bronze.png" class="ranklrg">
+        {% elif ((g.user.karma >= 15) and (g.user.karma < 30)) %}
+            <img src="/static/silver.png" class="ranklrg">
+        {% elif ((g.user.karma >= 30) and (g.user.karma < 60)) %}
+            <img src="/static/gold.png" class="ranklrg"> 
+        {% elif (g.user.karma >= 60) %}
+            <img src="/static/platinum.png" class="ranklrg" > 
+        {% endif %}
+
+        <img class="center-align profilePic" src="{{ g.user.profile_picture }}">
+        <h6 style="margin-left: 20px; color: grey;">Location:</h6>
+        <h7 class="locspace">{{ g.user.location }}</h7>
+        <br>
+        <h6 id="itemsOffer">Items on offer:</h6>
+        <h7>{{ g.user.items_offered }}</h7><br>
+        <h6 id="itemsOffer">Karma:</h6>
+        <h7>{{ g.user.karma }}</h7>
+        <br>
+        <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink profileBtn">View Profile</a>
+    </div>
+    <div class="body-man">
+        <div class="row">
+            <h5 class="headspace">New Requests</h5>
+            {% for borrow in bitems %}
             <div class="col s12 m4" style="min-width: 45%">
               <div class="card white" style="margin-left: -12px">
                 <div class="card-content white-text">
                     <span class="card-title black-text" style="line-height: 25px;"><b>{{ borrow.item_name }}</b></span>
                     <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ borrow.item_location }}</p>
                     <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ borrow.item_time_pickup }}</p>
-                  </div>
-            
+                </div>
+
                 <div class="card-action valign-wrapper">
                     <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ borrow.lister.profile_picture }}">
                     <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=borrow.lister.nickname) }}">{{ borrow.lister.first_name(borrow.lister.nickname) }}</a>
                     {% if ((borrow.lister.karma >= 0) and (borrow.lister.karma < 5)) %}
                     <img src="/static/stone.png" class="rank" >
                     {% elif ((borrow.lister.karma >= 5) and (borrow.lister.karma < 15)) %}
-                      <img src="/static/bronze.png" class="rank">
+                    <img src="/static/bronze.png" class="rank">
                     {% elif ((borrow.lister.karma >= 15) and (borrow.lister.karma < 30)) %}
-                      <img src="/static/silver.png" class="rank">
+                    <img src="/static/silver.png" class="rank">
                     {% elif ((borrow.lister.karma >= 30) and (borrow.lister.karma < 60)) %}
-                      <img src="/static/gold.png" class="rank"> 
+                    <img src="/static/gold.png" class="rank"> 
                     {% elif (borrow.lister.karma >= 60) %}
-                      <img src="/static/platinum.png" class="rank" > 
+                    <img src="/static/platinum.png" class="rank" > 
                     {% endif %}
                     <a href="{{ url_for('borrow_click', id=borrow.id) }}" class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;">LEND</a>
                 </div>
-              </div>
             </div>
+        </div>
         {% endfor %}
 
-      </div>
+    </div>
     <h5 class="headspace">New Items</h5>
     <div class="row">
         {% for lend in litems %}
-            <div class="col s12 m4" style="min-width: 50%">
-              <div class="card white" style="margin-left: -12px">
-                <div class="card-content white-text">
-                    <span class="card-title black-text" style="line-height: 25px;"><b>{{ lend.item_name }}</b></span>
-                    <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ lend.item_location }}</p>
-                    <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ lend.item_time_pickup }}</p>
-                  </div>
-                <div class="card-action valign-wrapper">
-                    <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
-                    <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=lend.lister.nickname) }}">{{ lend.lister.first_name(lend.lister.nickname) }}</a>
-                    {% if ((lend.lister.karma >= 0) and (lend.lister.karma < 5)) %}
-                    <img src="/static/stone.png" class="rank" >
-                    {% elif ((lend.lister.karma >= 5) and (lend.lister.karma < 15)) %}
-                      <img src="/static/bronze.png" class="rank">
-                    {% elif ((lend.lister.karma >= 15) and (lend.lister.karma < 30)) %}
-                      <img src="/static/silver.png" class="rank">
-                    {% elif ((lend.lister.karma >= 30) and (lend.lister.karma < 60)) %}
-                      <img src="/static/gold.png" class="rank"> 
-                    {% elif (lend.lister.karma >= 60) %}
-                      <img src="/static/platinum.png" class="rank" > 
-                    {% endif %}
-                    <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;">BORROW</a>
-                </div>
-              </div>
+        <div class="col s12 m4" style="min-width: 50%">
+          <div class="card white" style="margin-left: -12px">
+            <div class="card-content white-text">
+                <span class="card-title black-text" style="line-height: 25px;"><b>{{ lend.item_name }}</b></span>
+                <p class="black-text" style="margin-top: 24px"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ lend.item_location }}</p>
+                <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ lend.item_time_pickup }}</p>
             </div>
-        {% endfor %}
-        
-
-
+            <div class="card-action valign-wrapper">
+                <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ lend.lister.profile_picture }}">
+                <a class="black-text personName valign" style="text-transform: capitalize;"  href="{{ url_for('user', nickname=lend.lister.nickname) }}">{{ lend.lister.first_name(lend.lister.nickname) }}</a>
+                {% if ((lend.lister.karma >= 0) and (lend.lister.karma < 5)) %}
+                <img src="/static/stone.png" class="rank" >
+                {% elif ((lend.lister.karma >= 5) and (lend.lister.karma < 15)) %}
+                <img src="/static/bronze.png" class="rank">
+                {% elif ((lend.lister.karma >= 15) and (lend.lister.karma < 30)) %}
+                <img src="/static/silver.png" class="rank">
+                {% elif ((lend.lister.karma >= 30) and (lend.lister.karma < 60)) %}
+                <img src="/static/gold.png" class="rank"> 
+                {% elif (lend.lister.karma >= 60) %}
+                <img src="/static/platinum.png" class="rank" > 
+                {% endif %}
+                <a href="{{ url_for('lend_click', id=lend.id) }}" class="rounded waves-effect waves-light btn pink valign" style="position: absolute; right: 12px;">BORROW</a>
+            </div>
+        </div>
     </div>
-    <h5 class="headspace">Pending Items</h5>
-    <div class="row">
-        {% for pending in pitems %}
-            {% if (pending.user_click_name == g.user.nickname) or
-                  (pending.user_lister_name == g.user.nickname) %}
-                {% if (pending.user_click_name == g.user.nickname) and
-                      (pending.voted_clicker == 1) %}
-                      <!-- show nothing -->
-                {% elif (pending.user_click_name == g.user.nickname) %}
-                    <div class="col s12 m4" style="min-width: 60%">
-                      <div class="card white" style="margin-left: -12px">
-                        <div class="card-content white-text">
-                            <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
-                            <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
-                            <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
-                          </div>
-                    
-                        <div class="card-action valign-wrapper">
-                            <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
-                            <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
-                    
-                            <!--<a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_up</a>
-                            <a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_down</a>
-                            <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;">Cancel</a>-->
-                            <div style="float: right">
-                                <a href="{{ url_for('upvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_up</i></a>
-                                <a href="{{ url_for('downvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_down</i></a>
-                                <a href="{{ url_for('cancel', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">not_interested</i></a>
-                            </div>
-                        </div> 
-                      </div>
-                    </div>
-                {% endif %}
-                {% if (pending.user_lister_name == g.user.nickname) and
-                      (pending.voted_lister == 1) %}
-                      <!-- show nothing -->
-                {% elif (pending.user_lister_name == g.user.nickname) %}
-                    <div class="col s12 m4" style="min-width: 60%">
-                      <div class="card white" style="margin-left: -12px">
-                        <div class="card-content white-text">
-                            <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
-                            <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
-                            <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
-                          </div>
-                    
-                        <div class="card-action valign-wrapper">
-                            <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
-                            <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
-                            <!--<a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_up</a>
-                            <a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_down</a>
-                            <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;">Cancel</a>-->
-                            <div style="float: right">
-                                <a href="{{ url_for('upvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_up</i></a>
-                                <a href="{{ url_for('downvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_down</i></a>
-                                <a href="{{ url_for('cancel', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">not_interested</i></a>
-                            </div>
-                        </div> 
-                      </div>
-                    </div>
-                {% endif %}
-            {% endif %}
-        
-        {% endfor %}
+    {% endfor %}
+
+
+
+</div>
+<h5 class="headspace">Pending Items</h5>
+<div class="row">
+    {% for pending in pitems %}
+    {% if (pending.user_click_name == g.user.nickname) or
+    (pending.user_lister_name == g.user.nickname) %}
+    {% if (pending.user_click_name == g.user.nickname) and
+    (pending.voted_clicker == 1) %}
+    <!-- show nothing -->
+    {% elif (pending.user_click_name == g.user.nickname) %}
+    <div class="col s12 m4" style="min-width: 60%">
+      <div class="card white" style="margin-left: -12px">
+        <div class="card-content white-text">
+            <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
+            <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
+            <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
         </div>
 
-        
-     <div class="fixed-action-btn horizontal">
-    <a class="btn-floating btn-large pink">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating pink darken-1" href="{{ url_for('borrow_item') }}"><i class="material-icons">play_for_work</i></a></li>
-      <li><a class="btn-floating pink darken-1" href="{{ url_for('lend_item') }}">
-      <i class="material-icons">call_made</i></a></li>
-    </ul>
-  </div>
+        <div class="card-action valign-wrapper">
+            <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
+            <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
+
+                            <!--<a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_up</a>
+                            <a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_down</a>
+                            <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;">Cancel</a>-->
+                            <div style="float: right">
+                                <a href="{{ url_for('upvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_up</i></a>
+                                <a href="{{ url_for('downvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_down</i></a>
+                                <a href="{{ url_for('cancel', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">not_interested</i></a>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                {% endif %}
+                {% if (pending.user_lister_name == g.user.nickname) and
+                (pending.voted_lister == 1) %}
+                <!-- show nothing -->
+                {% elif (pending.user_lister_name == g.user.nickname) %}
+                <div class="col s12 m4" style="min-width: 60%">
+                  <div class="card white" style="margin-left: -12px">
+                    <div class="card-content white-text">
+                        <span class="card-title black-text"><b>{{ pending.item_name }}</b></span>
+                        <p class="black-text"><i class="fa fa-map-marker cardIcon grey-text"></i>{{ pending.item_location }}</p>
+                        <p class="black-text"><i class="fa fa-clock-o cardIcon grey-text"></i>{{ pending.item_time_pickup }}</p>
+                    </div>
+                    
+                    <div class="card-action valign-wrapper">
+                        <img class="center-align profilePicSmall valign" id="ppSmall" src="{{ pending.lister.profile_picture }}">
+                        <a class="black-text personName valign" style="text-transform: capitalize;" href="{{ url_for('user', nickname=pending.lister.nickname) }}">{{ pending.lister.first_name(pending.lister.nickname) }}</a>
+                            <!--<a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_up</a>
+                            <a class="rounded waves-effect waves-light btn pink valign material-icons">thumb_down</a>
+                            <a class="rounded waves-effect waves-light btn pink valign modal-trigger" style="position: absolute; right: 12px;">Cancel</a>-->
+                            <div style="float: right">
+                                <a href="{{ url_for('upvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_up</i></a>
+                                <a href="{{ url_for('downvote', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">thumb_down</i></a>
+                                <a href="{{ url_for('cancel', id=pending.id) }}" class="btn-floating btn-small waves-effect waves-light red" style="margin: 5px;"><i class="material-icons">not_interested</i></a>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+
+                {% endfor %}
+            </div>
 
 
-</div>
-</div>
-{% endblock %}
+            <div class="fixed-action-btn horizontal">
+                <a class="btn-floating btn-large pink">
+                  <i class="large material-icons">mode_edit</i>
+              </a>
+              <ul>
+                  <li><a class="btn-floating pink darken-1" href="{{ url_for('borrow_item') }}"><i class="material-icons">play_for_work</i></a></li>
+                  <li><a class="btn-floating pink darken-1" href="{{ url_for('lend_item') }}">
+                      <i class="material-icons">call_made</i></a></li>
+                  </ul>
+              </div>
+
+
+          </div>
+      </div>
+      {% endblock %}

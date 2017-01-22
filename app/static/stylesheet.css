@@ -32,6 +32,12 @@ main {
     display: inline-block;
 }
 
+.ranklrg{
+    height: 29px;
+    margin-left: 45%;
+    display: inline-block;
+}
+
 .sidebar{
     width: 30%;
     /*min-width:246px;*/
