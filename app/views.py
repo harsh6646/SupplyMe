@@ -245,6 +245,10 @@ def downvote(id):
     db.session.add(item)
     db.session.commit()
     flash('Downvote received! :^(')
+
+    # give it to pending
+    if (item.item_status <= 0):
+        pending(id)
     return redirect(url_for('index'))
 
 
@@ -257,9 +261,7 @@ def pending(id):
     if (user.items_offered > 0):
         user.items_offered = user.items_offered - 1
     db.session.add(user)
-
-    if (pending.item_status <= 0):
-        db.session.delete(pending)
+    db.session.delete(pending)
     db.session.commit()
     flash('The transaction was successful')
     return redirect(url_for('index'))
