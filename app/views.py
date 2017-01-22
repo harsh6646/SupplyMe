@@ -260,8 +260,15 @@ def downvote(id):
     return redirect(url_for('index'))
 
 
+@app.route('/cancel/<int:id>', methods=['GET', 'POST'])
+def cancel(id):
+    pending(id, True)
+    # flash('The transaction was cancelled')
+    return redirect(url_for('index'))
+
+
 @app.route('/pending/<int:id>', methods=['GET', 'POST'])
-def pending(id):
+def pending(id, cancel=False):
     pending = Pending.query.get(id)
     # get name of lister
     lister_name = pending.user_lister_name
@@ -271,7 +278,10 @@ def pending(id):
     db.session.add(user)
     db.session.delete(pending)
     db.session.commit()
-    flash('The transaction was successful')
+    if (not cancel):
+        flash('The transaction was successful')
+    else:
+        flash('The transaction was cancelled')
     return redirect(url_for('index'))
 
 
