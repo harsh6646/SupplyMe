@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length
 
 locations = [('Bahen Centre', 'Bahen Centre'), ('Convocation Hall', 'Convocation Hall'),
              ('Robarts', 'Robarts'), ('Gerstein', 'Gerstein'),
-             ('Hart House', 'Hart House'), ('King’s Circle', 'King’s Circle'),
+             ('Hart House', 'Hart House'), ("King's Circle", "King's Circle"),
              ('Instructional Centre', 'Instructional Centre'), ('Student Centre', 'Student Centre'),
              ('Environmental Science Building', 'Environmental Science Building'),
              ('Bladen Wing Tim Hortons', 'Bladen Wing Tim Hortons'),
