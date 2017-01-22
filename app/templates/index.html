@@ -2,6 +2,7 @@
 <script src="js/functions.js"></script>
 <script type="text/javascript" src="path_to/jquery.leanModal.min.js"></script>
 {% block content %}
+<div class="container">
 <div class="sidebar">
     <h5 class="center-align">{{ g.user.nickname }}</h5>
     <img class="center-align profilePic" src="{{ g.user.profile_picture }}">
@@ -16,15 +17,10 @@
     <a href="{{ url_for('user', nickname=g.user.nickname) }}" class="rounded waves-effect waves-light btn pink profileBtn">View Profile</a>
 </div>
 <div class="body-man">
-	<h5 class="headspace">New Requests</h5>
-	<ul id="navigation">
-    {% for item in navigation %}
-        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
-    {% endfor %}
-    </ul>
     <div class="row">
         {% for borrow in bitems %}
             <div class="col s12 m4" style="min-width: 40%">
+            <h5 class="headspace">New Requests</h5>
               <div class="card white" style="margin-left: -12px">
                 <div class="card-content white-text">
                     <span class="card-title black-text" style="line-height: 25px;"><b>{{ borrow.item_name }}</b></span>
@@ -141,5 +137,6 @@
   </div>
 
 
+</div>
 </div>
 {% endblock %}
